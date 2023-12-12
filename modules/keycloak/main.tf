@@ -2,7 +2,7 @@ resource "helm_release" "keycloak-server" {
   name             = var.app_name  # Name of the Helm release
   repository       = "https://charts.bitnami.com/bitnami"
   chart            = var.chart_name  # Name of the Helm chart
-  namespace        = var.namespace_name  # Namespace where Keycloak will be deployed
+  namespace        = var.namespace  # Namespace where Keycloak will be deployed
   version          = var.app_version
   create_namespace = true
   set {
@@ -50,5 +50,30 @@ resource "helm_release" "keycloak-server" {
     value = var.db_username
   }
 }
+
+
+resource "kubernetes_ingress" "keycloak_ingress" {
+  metadata {
+    name = "${var.namespace}-ingress"
+    annotations = {
+      "nginx.ingress.kubernetes.io/rewrite-target" = "/"
+    }
+    namespace = var.namespace
+  }
+  spec {
+    rule {
+      host = "keycloak.zimesfield.com"  # Replace with your domain
+      http {
+        path {
+          backend {
+            service_name = helm_release.keycloak-server.metadata[0].name
+            service_port = var.db_port
+          }
+        }
+      }
+    }
+  }
+}
+
 
 

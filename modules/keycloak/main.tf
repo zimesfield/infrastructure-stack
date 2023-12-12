@@ -66,7 +66,7 @@ resource "kubernetes_ingress" "keycloak_ingress" {
       http {
         path {
           backend {
-            service_name = helm_release.keycloak-server.metadata[0].name
+            service_name = helm_release.keycloak_helm_release.metadata[0].name
             service_port = var.db_port
           }
         }

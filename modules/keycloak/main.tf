@@ -1,4 +1,4 @@
-resource "helm_release" "keycloak-server" {
+resource "helm_release" "keycloak_helm_release" {
   name             = var.app_name  # Name of the Helm release
   repository       = "https://charts.bitnami.com/bitnami"
   chart            = var.chart_name  # Name of the Helm chart

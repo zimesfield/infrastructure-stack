@@ -1,4 +1,4 @@
-resource "helm_release" "postgresql" {
+resource "helm_release" "postgresql_helm_release" {
   name             = var.app_name
   namespace        = var.namespace_name
   chart            = var.chart_name

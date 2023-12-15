@@ -1,4 +1,4 @@
-resource "helm_release" "keycloak_server_release" {
+resource "helm_release" "keycloak_server" {
   name             = var.app_name  # Name of the Helm release
   repository       = "https://charts.bitnami.com/bitnami"
   chart            = var.chart_name  # Name of the Helm chart
@@ -65,7 +65,7 @@ resource "kubernetes_ingress" "keycloak_ingress" {
       http {
         path {
           backend {
-            service_name = helm_release.keycloak_helm_release.metadata[0].name
+            service_name = helm_release.keycloak_server.metadata[0].name
             service_port = var.db_port
           }
         }

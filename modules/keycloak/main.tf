@@ -1,7 +1,7 @@
 resource "helm_release" "keycloak_server" {
   name             = var.app_name  # Name of the Helm release
   repository       = "https://charts.bitnami.com/bitnami"
-  chart            = var.chart_name  # Name of the Helm chart
+  chart            = var.chart  # Name of the Helm chart
   namespace        = var.namespace  # Namespace where Keycloak will be deployed
   version          = var.app_version
   set {

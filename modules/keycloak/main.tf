@@ -1,10 +1,9 @@
-resource "helm_release" "keycloak_helm_release" {
+resource "helm_release" "keycloak_server_release" {
   name             = var.app_name  # Name of the Helm release
   repository       = "https://charts.bitnami.com/bitnami"
   chart            = var.chart_name  # Name of the Helm chart
   namespace        = var.namespace  # Namespace where Keycloak will be deployed
   version          = var.app_version
-  create_namespace = true
   set {
     name  = "postgresql.enabled"
     value = "false"

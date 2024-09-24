@@ -9,7 +9,7 @@ variable "app_name" {
 variable "app_version" {
   description = "The version of image"
   type        = string
-  default     = "13.1.2"
+  default     = "13.2.24"
 }
 variable "chart_name" {
   description = "The name of the Kubernetes chart"

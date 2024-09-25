@@ -17,24 +17,25 @@ data "linode_object_storage_cluster" "primary" {
 
 resource "linode_object_storage_key" "storage_key" {
   label = var.storage_key
+
 }
 
-resource "linode_object_storage_bucket" "terraform_state" {
+resource "linode_object_storage_bucket" "storage_bucket" {
   cluster    = data.linode_object_storage_cluster.primary.id
-  label      = var.label
+  label      = var.storage_bucket_label
   access_key = linode_object_storage_key.storage_key.access_key
   secret_key = linode_object_storage_key.storage_key.secret_key
 }
 
 resource "linode_object_storage_object" "object_storage" {
-  bucket  = linode_object_storage_bucket.terraform_state.label
+  bucket  = linode_object_storage_bucket.storage_bucket.label
   cluster = data.linode_object_storage_cluster.primary.id
   key     = var.object_storage_key
 
   secret_key = linode_object_storage_key.storage_key.secret_key
   access_key = linode_object_storage_key.storage_key.access_key
 
-  source = pathexpand("~/terraform_test.txt")
+  source = pathexpand(var.file_path)
 }
 
 # resource "linode_object_storage_object" "object2" {

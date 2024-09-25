@@ -1,9 +1,14 @@
-resource "helm_release" "keycloak_helm_release" {
+resource "helm_release" "keycloak" {
   name             = var.app_name  # Name of the Helm release
   repository       = "https://charts.bitnami.com/bitnami"
   chart            = var.chart  # Name of the Helm chart
   namespace        = var.namespace  # Namespace where Keycloak will be deployed
   version          = var.app_version
+  set {
+    name  = "proxyAddressForwarding"
+    value = "true"
+  }
+
   set {
     name  = "postgresql.enabled"
     value = "false"
@@ -48,31 +53,35 @@ resource "helm_release" "keycloak_helm_release" {
     name  = "externalDatabase.user"
     value = var.db_username
   }
-}
 
-
-resource "kubernetes_ingress" "keycloak_ingress" {
-  metadata {
-    name = "${var.namespace}-ingress"
-    annotations = {
-      "nginx.ingress.kubernetes.io/rewrite-target" = "/"
-    }
-    namespace = var.namespace
-  }
-  spec {
-    rule {
-      host = "keycloak.zimesfield.com"  # Replace with your domain
-      http {
-        path {
-          backend {
-            service_name = helm_release.keycloak_helm_release.metadata[0].name
-            service_port = var.db_port
-          }
-        }
-      }
-    }
+  set {
+    name  = "service.type"
+    value = "ClusterIP"
   }
 }
 
-
-
+# resource "kubernetes_ingress" "keycloak_ingress" {
+#   metadata {
+#     name = "${var.namespace}-ingress"
+#     annotations = {
+#       "nginx.ingress.kubernetes.io/rewrite-target" = "/"
+#     }
+#     namespace = var.namespace
+#   }
+#   spec {
+#     rule {
+#       host = "keycloak.zimesfield.com"  # Replace with your domain
+#       http {
+#         path {
+#           backend {
+#             service_name = helm_release.keycloak_helm_release.metadata[0].name
+#             service_port = var.db_port
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
+#
+#
+#

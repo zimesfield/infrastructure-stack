@@ -1,29 +1,29 @@
-resource "helm_release" "postgresql_helm_release" {
+resource "helm_release" "postgresql" {
   name             = var.app_name
   namespace        = var.namespace_name
   chart            = var.chart_name
   repository       = "https://charts.bitnami.com/bitnami"
   create_namespace = true
-  version          = var.app_version# You can specify the version you want
+  version          = var.app_version
 
   set {
     name = "primary.persistence.mountPath"
-    value = "/bitnami/keycloak/postgres"
+    value = "/bitnami/postgres"
   }
 
   set {
     name  = "auth.username"
-    value = var.db_username# Change this to a strong password
+    value = var.db_username
   }
 
   set_sensitive {
     name  = "auth.password"
-    value = var.db_password # Change this to a strong password
+    value = var.db_password
   }
 
   set {
     name  = "auth.database"
-    value = var.db_name  # PostgreSQL database name
+    value = var.db_name
   }
 }
 

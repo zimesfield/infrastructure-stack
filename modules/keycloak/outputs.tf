@@ -1,12 +1,8 @@
-output "keycloak_host" {
-  description = "The hostname of the Keycloak server"
-  value       = helm_release.keycloak_helm_release.id
-}
-
-output "keycloak_host_version" {
-  value = helm_release.keycloak_helm_release.version
-}
-
-output "keycloak_host_status" {
-  value = helm_release.keycloak_helm_release.status
-}
+#
+#
+# # Output the external IP or DNS of the LoadBalancer
+# output "keycloak_service_ip" {
+#   value = kubernetes_service.keycloak.status.0.load_balancer.0.ingress.0.ip
+#   # Alternatively, use hostname if the service uses DNS
+#   # value = kubernetes_service.keycloak.status.0.load_balancer.0.ingress.0.hostname
+# }

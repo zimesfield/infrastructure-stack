@@ -3,7 +3,7 @@ variable "token" {
   type        = string
 }
 
-variable "label" {
+variable "storage_key_label" {
   description = "storage key"
   type        = string
 }

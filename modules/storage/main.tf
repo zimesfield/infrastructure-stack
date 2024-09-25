@@ -16,7 +16,7 @@ data "linode_object_storage_cluster" "primary" {
 }
 
 resource "linode_object_storage_key" "storage_key" {
-  label = var.storage_key
+  label = var.storage_key_label
 
 }
 
@@ -38,15 +38,3 @@ resource "linode_object_storage_object" "object_storage" {
   source = pathexpand(var.file_path)
 }
 
-# resource "linode_object_storage_object" "object2" {
-#   bucket  = linode_object_storage_bucket.mybucket-j1145.label
-#   cluster = data.linode_object_storage_cluster.primary.id
-#   key     = "freetext-object"
-#
-#   secret_key = linode_object_storage_key.storagekey.secret_key
-#   access_key = linode_object_storage_key.storagekey.access_key
-#
-#   content          = "This is the content of the Object..."
-#   content_type     = "text/plain"
-#   content_language = "en"
-# }

@@ -12,7 +12,7 @@ provider "linode" {
 }
 
 data "linode_object_storage_cluster" "primary" {
-  id = var.region
+  id = var.storage_region
 }
 
 resource "linode_object_storage_key" "storage_key" {

@@ -51,28 +51,28 @@ resource "helm_release" "keycloak_helm_release" {
 }
 
 
-resource "kubernetes_ingress" "keycloak_ingress" {
-  metadata {
-    name = "${var.namespace}-ingress"
-    annotations = {
-      "nginx.ingress.kubernetes.io/rewrite-target" = "/"
-    }
-    namespace = var.namespace
-  }
-  spec {
-    rule {
-      host = "keycloak.zimesfield.com"  # Replace with your domain
-      http {
-        path {
-          backend {
-            service_name = helm_release.keycloak_helm_release.metadata[0].name
-            service_port = var.db_port
-          }
-        }
-      }
-    }
-  }
-}
+# resource "kubernetes_ingress" "keycloak_ingress" {
+#   metadata {
+#     name = "${var.namespace}-ingress"
+#     annotations = {
+#       "nginx.ingress.kubernetes.io/rewrite-target" = "/"
+#     }
+#     namespace = var.namespace
+#   }
+#   spec {
+#     rule {
+#       host = "keycloak.zimesfield.com"  # Replace with your domain
+#       http {
+#         path {
+#           backend {
+#             service_name = helm_release.keycloak_helm_release.metadata[0].name
+#             service_port = var.db_port
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
 
 
 

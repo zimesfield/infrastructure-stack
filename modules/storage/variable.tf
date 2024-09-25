@@ -19,7 +19,7 @@ variable "object_storage_key" {
   type        = string
 }
 
-variable "region" {
+variable "storage_region" {
   description = "Storage region id"
   type        = string
 }

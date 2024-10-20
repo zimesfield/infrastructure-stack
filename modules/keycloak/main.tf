@@ -11,6 +11,11 @@ resource "helm_release" "keycloak" {
   }
 
   set {
+    name  = "containerPorts.http"
+    value = "9080"
+  }
+
+  set {
     name  = "postgresql.enabled"
     value = "false"
   }

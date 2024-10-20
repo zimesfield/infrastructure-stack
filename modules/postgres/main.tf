@@ -25,5 +25,21 @@ resource "helm_release" "postgresql" {
     name  = "auth.database"
     value = var.db_name
   }
+
+  set {
+    name  = "primary.service.port"
+    value = "5432"
+  }
+
+  set {
+    name  = "primary.service.type"
+    value = "ClusterIP"  # Can be LoadBalancer if needed
+  }
+
+  set {
+    name  = "primary.service.name"
+    value = "${var.app_name}-svc"
+  }
+
 }
 

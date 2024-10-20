@@ -1,12 +1,11 @@
 variable "namespace" {
   description = "The name of the Kubernetes namespace"
   type        = string
-  default     = "keycloak"
 }
 variable "app_version" {
   description = "The version of image"
   type        = string
-  default     = "17.3.6"
+  default     = "24.0.1"
 }
 variable "chart" {
   description = "The name of the Kubernetes chart"
@@ -16,7 +15,6 @@ variable "chart" {
 variable "app_name" {
   description = "The name of the app service"
   type        = string
-  default     = "keycloak"
 }
 variable "db_name" {
   description = "The name of the realm"

@@ -1,9 +1,10 @@
 resource "helm_release" "keycloak" {
   name             = var.app_name  # Name of the Helm release
   repository       = "https://charts.bitnami.com/bitnami"
-  chart            = var.chart  # Name of the Helm chart
+  chart            = "keycloak"  # Name of the Helm chart
   namespace        = var.namespace  # Namespace where Keycloak will be deployed
   version          = var.app_version
+
   set {
     name  = "proxyAddressForwarding"
     value = "true"
@@ -26,7 +27,7 @@ resource "helm_release" "keycloak" {
 
   set {
     name  = "externalDatabase.host"
-    value = var.db_host
+    value = "keycloak-db-postgresql"
   }
 
   set {
@@ -41,12 +42,12 @@ resource "helm_release" "keycloak" {
 
   set {
     name  = "externalDatabase.existingSecret"
-    value = var.db_password_secret
+    value = "keycloak-db-postgresql"
   }
 
   set {
     name  = "externalDatabase.existingSecretPasswordKey"
-    value = var.db_password_key
+    value = "password"
   }
 
   set {
@@ -57,6 +58,28 @@ resource "helm_release" "keycloak" {
   set {
     name  = "service.type"
     value = "ClusterIP"
+  }
+
+  set {
+    name  = "readinessProbe.enabled"
+    value = false
+  }
+
+  set {
+    name  = "readinessProbe.initialDelaySeconds"
+    value = 60
+  }
+
+  set {
+    name  = "readinessProbe.failureThreshold"
+    value = 6
+  }
+}
+
+data "kubernetes_service" "postgresql" {
+  metadata {
+    name      = "${var.app_name}-postgresql"
+    namespace = var.namespace
   }
 }
 

@@ -43,3 +43,25 @@ resource "helm_release" "postgresql" {
 
 }
 
+
+resource "kubernetes_service" "postgresql_lb" {
+  metadata {
+    name             = var.app_name
+    namespace        = var.namespace_name
+    annotations = {
+      service.beta.kubernetes.io/linode-loadbalancer-preserve: "true"
+    }
+  }
+  spec {
+    type = "LoadBalancer"
+    port {
+      port        = 5432
+      target_port = 5432
+      protocol    = "TCP"
+    }
+    selector = {
+      app.kubernetes.io/name  = helm_release.postgresql.name
+      app.kubernetes.io/instance = helm_release.postgresql.name
+    }
+  }
+}

@@ -7,12 +7,6 @@ variable "app_name" {
   description = "Application prefix for resource names"
 }
 
-variable "prevent_destroy" {
-  type        = bool
-  default     = true
-  description = "Set to false to allow StorageClass destruction"
-}
-
 variable "app_version" {
   description = "The version of image"
   type        = string

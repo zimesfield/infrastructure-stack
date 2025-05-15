@@ -35,12 +35,6 @@ variable "app_name" {
   description = "the service that requires db name"
 }
 
-variable "prevent_destroy" {
-  description = "ensure volume is not destroyed"
-  type = object({})
-  default = false
-}
-
 variable "service_port" {
   description = "the port"
 }

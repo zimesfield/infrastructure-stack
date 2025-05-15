@@ -3,9 +3,16 @@ variable "namespace" {
   type        = string
 }
 variable "app_name" {
-  description = "The name of the app service"
   type        = string
+  description = "Application prefix for resource names"
 }
+
+variable "prevent_destroy" {
+  type        = bool
+  default     = true
+  description = "Set to false to allow StorageClass destruction"
+}
+
 variable "app_version" {
   description = "The version of image"
   type        = string
@@ -24,14 +31,10 @@ variable "database_username" {
   description = "The name of the db"
   type        = string
 }
+
 variable "database_name" {
   description = "The name of the db"
   type        = string
-}
-
-variable "prevent_destroy" {
-  description = "ensure volume is not destroyed"
-  default = false
 }
 
 variable "root_password" {

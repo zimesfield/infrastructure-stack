@@ -35,7 +35,7 @@ resource "kubernetes_storage_class" "postgres_retain" {
   ]
 
   lifecycle {
-    prevent_destroy = var.prevent_destroy                        # guard against accidental deletion :contentReference[oaicite:8]{index=8}
+    prevent_destroy = true                                       # guard against accidental deletion :contentReference[oaicite:8]{index=8}
     ignore_changes  = [metadata]                                 # ignore metadata-only diffs :contentReference[oaicite:9]{index=9}
   }
 }

@@ -37,7 +37,22 @@ variable "app_name" {
 
 variable "prevent_destroy" {
   description = "ensure volume is not destroyed"
+  type = object({})
   default = false
+}
+
+variable "life_cycle" {
+  description = "The Node Pool specifications for the Kubernetes cluster. (required)"
+  type = object({
+    type = string
+    count = number
+  })
+  default = [
+    {
+      type = "g6-standard-1"
+      count = 3
+    }
+  ]
 }
 
 variable "service_port" {

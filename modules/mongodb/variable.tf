@@ -35,12 +35,13 @@ variable "app_name" {
   description = "the service that requires db name"
 }
 
-variable "port" {
-  description = "the port"
+variable "prevent_destroy" {
+  description = "ensure volume is not destroyed"
+  default = false
 }
 
-variable "target_port" {
-  description = "the target port"
+variable "service_port" {
+  description = "the port"
 }
 
 variable "persistent_size" {

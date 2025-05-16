@@ -1,6 +1,3 @@
-variable "external_url" {
-  description = "external url"
-}
 
 variable "app_version" {
   description = "app version"
@@ -29,7 +26,6 @@ variable "database_password" {
 variable "database_name" {
   description = "the database name"
 }
-
 
 variable "app_name" {
   description = "the service that requires db name"

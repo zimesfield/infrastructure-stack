@@ -1,12 +1,12 @@
 
-data "kubernetes_storage_class" "existing" {
-  metadata {
-    name = "${var.app_name}-storage-retain"
-  }
-}
+# data "kubernetes_storage_class" "existing" {
+#   metadata {
+#     name = "${var.app_name}-storage-retain"
+#   }
+# }
 
 resource "kubernetes_storage_class" "postgres_retain" {
-  count = length(data.kubernetes_storage_class.existing.metadata) > 0 ? 0 : 1
+#   count = length(data.kubernetes_storage_class.existing.metadata) > 0 ? 0 : 1
 
   metadata {
     name = "${var.app_name}-storage-retain"

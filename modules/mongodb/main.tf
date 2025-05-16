@@ -17,15 +17,35 @@ resource "helm_release" "mongodb" {
   }
 
 
+  set_sensitive {
+    name  = "auth.username"
+    value = var.database_username
+  }
+
+  set_sensitive {
+    name  = "auth.database"
+    value = var.database_name
+  }
+
+  set_sensitive {
+    name  = "auth.password"
+    value = var.database_password
+  }
+
+  set_sensitive {
+    name  = "auth.rootPassword"
+    value = var.root_password
+  }
+
+  set_sensitive {
+    name  = "auth.username"
+    value = var.database_username
+  }
+
+
   values = [
     yamlencode({
       architecture = "standalone"
-      auth = {
-        rootPassword = var.root_password
-        username     = var.database_username
-        password     = var.database_password
-        database     = var.database_name
-      }
       persistence = {
         enabled = true
         size    = var.persistent_size

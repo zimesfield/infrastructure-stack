@@ -5,6 +5,26 @@ resource "helm_release" "postgresql" {
   repository = "https://charts.bitnami.com/bitnami"
   version    = var.app_version
 
+  set_sensitive {
+    name  = "auth.username"
+    value = var.database_username
+  }
+
+  set_sensitive {
+    name  = "auth.database"
+    value = var.database_name
+  }
+
+  set_sensitive {
+    name  = "auth.password"
+    value = var.database_password
+  }
+
+  set_sensitive {
+    name  = "auth.postgresPassword"
+    value = var.root_password
+  }
+
   values = [
     yamlencode({
       primary = {
@@ -19,12 +39,6 @@ resource "helm_release" "postgresql" {
             postgresql = var.service_port
           }
         }
-      }
-      auth = {
-        postgresPassword = var.root_password
-        username         = var.database_name
-        password         = var.database_password
-        database         = var.database_name
       }
     })
   ]

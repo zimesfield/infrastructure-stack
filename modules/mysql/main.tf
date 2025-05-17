@@ -1,26 +1,47 @@
 resource "helm_release" "mysql" {
-  name       = var.app_name
-  namespace  = var.namespace
-  chart      = var.chart
-  repository = "https://charts.bitnami.com/bitnami"  # Bitnami's chart repo
-  version    = var.app_version  # use a version with externalAccess support
+  name      = var.app_name
+  namespace = var.namespace
+  chart   = "oci://registry-1.docker.io/bitnamicharts/mysql"
+  version = var.app_version
 
-  # Set custom authentication values
+  # Enable replication mode
+  set {
+    name  = "architecture"
+    value = "replication"
+  }
+
+  # One primary and one secondary
+  set {
+    name  = "replicaCount"
+    value = "1"
+  }
+
+  # Root and application credentials
   set_sensitive {
     name  = "auth.rootPassword"
-    value = var.root_password      # <-- custom root password
+    value = var.root_password
   }
-  set_sensitive {
+  set {
     name  = "auth.username"
-    value = var.database_username                 # <-- custom MySQL user
+    value = var.database_username
   }
   set_sensitive {
     name  = "auth.password"
-    value = var.database_password         # <-- custom MySQL user password
+    value = var.database_password
   }
   set {
     name  = "auth.database"
-    value = var.database_name            # <-- custom database name
+    value = var.database_name
+  }
+
+  # Replication user credentials
+  set {
+    name  = "auth.replicationUser"
+    value = var.database_username
+  }
+  set_sensitive {
+    name  = "auth.replicationPassword"
+    value = var.database_password
   }
 
   values = [
@@ -41,6 +62,5 @@ resource "helm_release" "mysql" {
     })
   ]
 }
-
 
 

@@ -7,7 +7,7 @@ resource "helm_release" "mysql" {
   # Enable replication mode
   set {
     name  = "architecture"
-    value = "replication"
+    value = "standalone"
   }
 
   # One primary and one secondary
@@ -34,15 +34,15 @@ resource "helm_release" "mysql" {
     value = var.database_name
   }
 
-  # Replication user credentials
-  set {
-    name  = "auth.replicationUser"
-    value = var.database_username
-  }
-  set_sensitive {
-    name  = "auth.replicationPassword"
-    value = var.database_password
-  }
+#   # Replication user credentials
+#   set {
+#     name  = "auth.replicationUser"
+#     value = var.database_username
+#   }
+#   set_sensitive {
+#     name  = "auth.replicationPassword"
+#     value = var.database_password
+#   }
 
   values = [
     yamlencode({
